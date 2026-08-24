@@ -1,0 +1,10 @@
+pandas
+numpy
+xarray
+netCDF4
+matplotlib
+colormaps
+seaborn
+scikit-learn
+copernicusmarine
+jupyter

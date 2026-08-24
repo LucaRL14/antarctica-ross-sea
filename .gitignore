@@ -1,0 +1,26 @@
+# Local instructions (not part of the public repository)
+Instructions.md
+
+# Large climate data (NetCDF) — download locally; see README.md
+*.nc
+data/ORAS5/*
+!data/ORAS5/.gitkeep
+data/sea_ice_thickness/*
+!data/sea_ice_thickness/.gitkeep
+
+# Very large derived tables (full-grid bronze CSVs, tens of GB)
+tables/*
+!tables/.gitkeep
+
+# Python / Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
