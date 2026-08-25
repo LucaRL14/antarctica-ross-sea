@@ -82,7 +82,7 @@ A Copernicus Marine account is required (`copernicusmarine.login()`). Additional
 - This relationship is strongly season-dependent, with stronger negative correlations in spring (r=−0.72) and autumn (r=−0.65), and a weaker relationship in winter (r=−0.28).
 - In contrast, the relationship between ocean heat content and SIT is weaker and less consistent across seasons, with correlations ranging from approximately −0.33 to +0.20.
 - These results suggest that SST is more strongly associated with SIT variability than OHC, although this does not imply a causal relationship.
-- A preliminary Isolation Forest analysis identified March 2021 as a potential multivariate outlier, consistently characterized by below-average SIT (~−0.15 m) combined with above-average SST (~+0.18 °C) and OHC, supporting the anomaly-based analysis and highlighting this period as a candidate for further investigation.
+- A preliminary Isolation Forest analysis identified March 2021 as a potential multivariate outlier, consistently characterized by below-average SIT (−0.15 m) combined with above-average SST (+0.18 °C) and OHC, supporting the anomaly-based analysis and highlighting this period as a candidate for further investigation.
 
 ---
 
