@@ -1,4 +1,4 @@
-# Antarctic Ross Sea-Ice Thickness and Southern Ocean Heat
+# Antarctic Ross Sea Ice Thickness and Southern Ocean Heat
 
 This repository analyses how **Antarctic Ross Sea sea-ice thickness** varies on seasonal and interannual timescales, and how that variability relates to **sea-surface temperature (SST)** and **upper-ocean heat content**.
 
