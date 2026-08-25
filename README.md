@@ -4,7 +4,7 @@ This repository analyses how **Antarctic Ross Sea sea-ice thickness** varies on 
 
 **Research question:** *How does Antarctic Ross Sea sea-ice thickness vary on seasonal and interannual timescales, and to what extent is this variability associated with changes in ocean temperature and heat content?*
 
-The main analysis is in `Antartica_notebook.ipynb` (ORAS5, January 2015–August 2026). The region of interest is a Ross Sea box: **latitude −76° to −74°, longitude 174° to 176°**.
+The main analysis is in `Antarctica_notebook.ipynb` (ORAS5, January 2015–August 2026). The region of interest is a Ross Sea box: **latitude −76° to −74°, longitude 174° to 176°**.
 
 ---
 
@@ -18,7 +18,7 @@ The main analysis is in `Antartica_notebook.ipynb` (ORAS5, January 2015–August
 | `data/sea_ice_thickness/` | Copernicus / CryoSat–ESA sea-ice thickness NetCDF files (local only). |
 | `figures/` | Figures produced by the analysis. |
 | `tables/` | Derived tables. Full-grid bronze CSVs are kept locally (too large for GitHub). |
-| `Antartica_notebook.ipynb` | EDA, climatology/variability, Isolation Forest outlier test, and discussion. |
+| `Antarctica_notebook.ipynb` | EDA, climatology/variability, Isolation Forest outlier test, and discussion. |
 | `requirements.txt` | Python dependencies. |
 
 Raw NetCDF and bronze CSV files are **gitignored** because they are tens of gigabytes (GitHub file limit is 100 MB). Clone this repo, then place the data under `data/` as described below.
@@ -56,7 +56,7 @@ A Copernicus Marine account is required (`copernicusmarine.login()`). Additional
 
 ---
 
-## Analysis (`Antartica_notebook.ipynb`)
+## Analysis (`Antarctica_notebook.ipynb`)
 
 1. **EDA and preprocessing**  
    Concatenate monthly ORAS5 NetCDFs, subset the Ross Sea box, and inspect SIT, SST, and OHC.
@@ -72,7 +72,17 @@ A Copernicus Marine account is required (`copernicusmarine.login()`). Additional
    An [Isolation Forest](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html) (`scikit-learn`) is fit on SIT, SST, and OHC anomalies to flag multivariate outliers and compare with the climatological anomaly definition.
 
 4. **Discussion / key findings**  
-   Summarised at the end of the notebook (seasonal cycle, SIT–SST correlation, limited OHC relationship, March 2021 as a candidate outlier period).
+
+- Antarctic Ross Sea sea-ice thickness exhibits a strong seasonal cycle, with minimum thickness during austral summer and maximum thickness during winter.
+- Sea surface temperature shows an opposite seasonal behaviour, with warmer conditions occurring during periods of reduced sea-ice thickness.
+- Interannual variability is substantial, but no clear monotonic trend in sea-ice thickness is observed over 2015–2026.
+- Recent years show notable SST anomalies, particularly positive anomalies during austral summer 2025–2026. However, the short study period and incomplete 2026 data do not allow a robust long-term warming trend to be established.
+- SIT anomalies also show substantial interannual variability, including periods of both positive and negative departures from the monthly climatology.
+- SIT and SST anomalies exhibit a moderate negative correlation overall (r=−0.42), indicating that warmer-than-average surface waters tend to coincide with thinner-than-average sea ice.
+- This relationship is strongly season-dependent, with stronger negative correlations in spring (r=−0.72) and autumn (r=−0.65), and a weaker relationship in winter (r=−0.28).
+- In contrast, the relationship between ocean heat content and SIT is weaker and less consistent across seasons, with correlations ranging from approximately −0.33 to +0.20.
+- These results suggest that SST is more strongly associated with SIT variability than OHC, although this does not imply a causal relationship.
+- A preliminary Isolation Forest analysis identified March 2021 as a potential multivariate outlier, consistently characterized by below-average SIT (~−0.15 m) combined with above-average SST (~+0.18 °C) and OHC, supporting the anomaly-based analysis and highlighting this period as a candidate for further investigation.
 
 ---
 
@@ -85,7 +95,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Then open `Antartica_notebook.ipynb` in Jupyter or VS Code / Cursor. Update file paths if your data directory is not `data/ORAS5/`.
+Then open `Antarctica_notebook.ipynb` in Jupyter or VS Code / Cursor. Update file paths if your data directory is not `data/ORAS5/`.
 
 ---
 
