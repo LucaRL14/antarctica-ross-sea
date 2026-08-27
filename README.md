@@ -4,7 +4,12 @@ This repository analyses how **Antarctic Ross Sea sea-ice thickness** varies on 
 
 **Research question:** *How does Antarctic Ross Sea sea-ice thickness vary on seasonal and interannual timescales, and to what extent is this variability associated with changes in ocean temperature and heat content?*
 
-The main analysis is in `Antarctica_notebook.ipynb` (ORAS5, January 2015–August 2026). The region of interest is a Ross Sea box: **latitude −76° to −74°, longitude 174° to 176°**.
+Two complementary analyses are included:
+
+- `Antarctica_notebook.ipynb` — ORAS5 reanalysis (January 2015–August 2026)
+- `CMIP6_analysis.ipynb` — CMIP6 model sea-ice thickness predictions (2015–2029)
+
+The region of interest is a Ross Sea box: **latitude −76° to −74°, longitude 174° to 176°**.
 
 ---
 
@@ -15,10 +20,12 @@ The main analysis is in `Antarctica_notebook.ipynb` (ORAS5, January 2015–Augus
 | `data/` | Climate data (NetCDF) and the Copernicus download notebook. **ORAS5 files were downloaded manually from the product website** (they are not fetched by the notebook). |
 | `data/data_dowload.ipynb` | Notebook to log in to [Copernicus Marine](https://data.marine.copernicus.eu/) and download Antarctic sea-ice thickness (`esa_obs-si_ant_phy-sit_nrt_l4-multi_P1D-m`). |
 | `data/ORAS5/` | Monthly ORAS5 high-resolution 2D NetCDF files (local only; not stored on GitHub). |
+| `data/CMIP6/` | CMIP6 sea-ice thickness NetCDF files from ESGF (local only; not stored on GitHub). |
 | `data/sea_ice_thickness/` | Copernicus / CryoSat–ESA sea-ice thickness NetCDF files (local only). |
-| `figures/` | Figures produced by the analysis. |
+| `figures/` | Figures and summary documents (`Doc1_ORAS5.docx`, `Doc2_CMIP6.docx`) produced by the analyses. |
 | `tables/` | Derived tables. Full-grid bronze CSVs are kept locally (too large for GitHub). |
-| `Antarctica_notebook.ipynb` | EDA, climatology/variability, Isolation Forest outlier test, and discussion. |
+| `Antarctica_notebook.ipynb` | ORAS5 EDA, climatology/variability, Isolation Forest outlier test, and discussion. |
+| `CMIP6_analysis.ipynb` | CMIP6 SIT prediction analysis: EDA, climatology/variability, February/September statistics, and discussion. |
 | `requirements.txt` | Python dependencies. |
 
 Raw NetCDF and bronze CSV files are **gitignored** because they are tens of gigabytes (GitHub file limit is 100 MB). Clone this repo, then place the data under `data/` as described below.
@@ -27,7 +34,7 @@ Raw NetCDF and bronze CSV files are **gitignored** because they are tens of giga
 
 ## Data
 
-### ORAS5 (used in the analysis notebook)
+### ORAS5 (used in `Antarctica_notebook.ipynb`)
 
 **Source:** ECMWF Ocean Reanalysis System 5 (ORAS5), monthly high-resolution 2D operational files (`*_control_monthly_highres_2D_*_OPER_v0.1.nc`).
 
@@ -44,6 +51,20 @@ Raw NetCDF and bronze CSV files are **gitignored** because they are tens of giga
 | `sohtc300` | Ocean heat content in the upper 300 m (OHC) |
 
 Example filename: `iicethic_control_monthly_highres_2D_201501_OPER_v0.1.nc`.
+
+### CMIP6 (used in `CMIP6_analysis.ipynb`)
+
+**Source:** [ESGF](https://esgf.llnl.gov/) CMIP6 model output.
+
+| Field | Value |
+|-------|--------|
+| Variable | Sea-ice thickness (`sithick`) |
+| Model | HadGEM3-GC31-MM |
+| Experiment | ssp585 (`r3i1p1f3`) |
+| Period | 2015–2029 |
+| Local path | `data/CMIP6/` |
+
+Example filename: `sithick_SImon_HadGEM3-GC31-MM_ssp585_r3i1p1f3_gn_201501-202912.nc`.
 
 ### Copernicus Marine sea-ice thickness (download notebook)
 
@@ -86,6 +107,48 @@ A Copernicus Marine account is required (`copernicusmarine.login()`). Additional
 
 ---
 
+## Analysis (`CMIP6_analysis.ipynb`)
+
+Notebook to analyse CMIP6 sea-ice thickness (`sithick`) predictions for the Ross Sea and produce figures (`figures/Doc2_CMIP6.docx`).
+
+1. **EDA and preprocessing**  
+   Load the HadGEM3-GC31-MM NetCDF, subset the region of interest, and prepare a monthly SIT time series.
+
+2. **Sea-ice climatology and variability**  
+   - Monthly climatology  
+   - Annual variability  
+
+3. **Quick monthly statistics**  
+   Distribution of SIT in **February** (end of austral summer) and **September** (end of austral winter).
+
+4. **Discussion / key findings**  
+
+- Strong seasonal variability: SIT varies substantially throughout the year, with a pronounced minimum around March and generally higher values later in the year.
+- Large interannual variability: annual mean SIT ranges roughly from 1.04 to 1.20 m, with no clear monotonic trend over 2015–2026.
+- Lowest annual SIT: around 2021 and 2026 (~1.04 m).
+- Highest annual SIT: 2017 (~1.20 m), followed by 2019 (~1.18 m).
+- Recent period: SIT increases from 2021 to 2025, then drops markedly in 2026.
+- February: very large spread (~0.7–1.9 m), indicating strong interannual variability.
+- September: much narrower distribution (~1.15–1.58 m), with a median around 1.4 m.
+
+**Caveat:** the February–March behaviour looks unusual. It may reflect spatial averaging choices and/or known limitations of CMIP6 `sithick`. Further analysis of drivers is needed to interpret this pattern.
+
+---
+
+## CMIP6 vs. ORAS5
+
+Both CMIP6 and ORAS5 reproduce a strong seasonal cycle in SIT, with substantial year-to-year variability. ORAS5 also suggests a physical link between warmer ocean conditions and thinner sea ice, especially in spring and autumn.
+
+The CMIP6 simulation shows different SIT behaviour (unusual around February–March). This may come from model physics, spatial averaging, or how sea ice and ocean processes are represented. CMIP6 is also known to have issues with the sea ice state, so these results should be treated with caution.
+
+**Next steps:**
+
+- Compare CMIP6 and ORAS5 more consistently (metrics, and drivers such as SST, OHC, air temperature, winds, and ocean circulation).
+- Identify biases in the CMIP6 SIT–ocean relationship relative to ORAS5.
+- **Redo the same analysis with CMIP7 predictions**, once available..
+
+---
+
 ## Setup
 
 ```bash
@@ -95,10 +158,13 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Then open `Antarctica_notebook.ipynb` in Jupyter or VS Code / Cursor. Update file paths if your data directory is not `data/ORAS5/`.
+Then open `Antarctica_notebook.ipynb` or `CMIP6_analysis.ipynb` in Jupyter or VS Code. Update file paths if your data are not under `data/ORAS5/` or `data/CMIP6/`.
 
 ---
 
 ## Figures
 
-PNG maps and time-series plots live in `figures/` (monthly/seasonal/annual climatologies, heatmaps, Ross Sea snapshots, anomaly and variable-relationship plots).
+PNG maps and time-series plots live in `figures/` (monthly/seasonal/annual climatologies, heatmaps, Ross Sea snapshots, anomaly and variable-relationship plots). Summary documents:
+
+- `figures/Doc1_ORAS5.docx` — ORAS5 analysis figures  
+- `figures/Doc2_CMIP6.docx` — CMIP6 analysis figures  

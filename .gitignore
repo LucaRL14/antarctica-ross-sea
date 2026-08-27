@@ -5,8 +5,13 @@ Instructions.md
 *.nc
 data/ORAS5/*
 !data/ORAS5/.gitkeep
+data/CMIP6/*
+!data/CMIP6/.gitkeep
 data/sea_ice_thickness/*
 !data/sea_ice_thickness/.gitkeep
+
+# Word lock / temp files
+figures/~$*
 
 # Very large derived tables (full-grid bronze CSVs, tens of GB)
 tables/*
