@@ -145,7 +145,7 @@ The CMIP6 simulation shows different SIT behaviour (unusual around February–Ma
 
 - Compare CMIP6 and ORAS5 more consistently (metrics, and drivers such as SST, OHC, air temperature, winds, and ocean circulation).
 - Identify biases in the CMIP6 SIT–ocean relationship relative to ORAS5.
-- **Redo the same analysis with CMIP7 predictions**, once available..
+- Redo the same analysis with CMIP7 predictions, once available..
 
 ---
 
